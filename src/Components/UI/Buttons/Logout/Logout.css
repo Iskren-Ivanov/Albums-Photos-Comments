@@ -1,0 +1,17 @@
+.logout-container {
+    float: right;
+    padding: 0 0 10px 10px;
+}
+
+.btn-logout {
+    background: #0b99b8;
+    color: #01151d;
+    height: 35px;
+    width: 60px;
+}
+
+.btn-logout:hover {
+    background: #1e5569;
+    color: #fff;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
