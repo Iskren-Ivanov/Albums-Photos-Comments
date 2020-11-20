@@ -52,9 +52,9 @@ const Logout = () => {
     };
 };
 
-const GetLocaleStoreDataForStart = (localeStoreData) => {
+const GetLocalStoreDataForStart = (localStoreData) => {
     return dispatch => {
-        dispatch({ type: 'SIGN_UP_WITH_ID_TOKEN', authData: localeStoreData })
+        dispatch({ type: 'SIGN_UP_WITH_ID_TOKEN', authData: localStoreData })
     };
 };
 
@@ -62,6 +62,6 @@ const GetLocaleStoreDataForStart = (localeStoreData) => {
 export default {
     SingUp,
     SingIn,
-    GetLocaleStoreDataForStart,
+    GetLocalStoreDataForStart,
     Logout,
 };

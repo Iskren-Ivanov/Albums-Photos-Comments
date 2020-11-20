@@ -16,7 +16,7 @@ function App(props) {
   useEffect(() => {
     const localStoreData = JSON.parse(localStorage.getItem('userData'));
     if (localStoreData) {
-      props.getLocaleStoreDataForStart(localStoreData);
+      props.getLocalStoreDataForStart(localStoreData);
     }
   }, [props])
 
@@ -31,7 +31,7 @@ function App(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getLocaleStoreDataForStart: (localeStoreData) => dispatch(authRedux.GetLocaleStoreDataForStart(localeStoreData)),
+  getLocalStoreDataForStart: (localStoreData) => dispatch(authRedux.GetLocalStoreDataForStart(localStoreData)),
 });
 
 

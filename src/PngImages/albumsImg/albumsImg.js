@@ -1,4 +1,3 @@
-
 import img1 from './harold-wijnholds-uvF5mhUd8L4-unsplash.jpg';
 import img2 from './joel-de-vriend-3r_WGsRwoIk-unsplash.jpg';
 import img3 from './jonathan-roger-LY1eyQMFeyo-unsplash.jpg';
@@ -16,7 +15,6 @@ import img14 from './rotterdam-4152380_640-640×360.jpg';
 import img15 from './rotterdam-102702_640x426.jpg';
 
 const albums = [
-
     {
         img: img1,
         id: 1,
