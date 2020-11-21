@@ -19,7 +19,7 @@ const Home = () => {
                 more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     </p>
                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="https://www.lipsum.com/" role="button">Learn more</a>
+                    <a class="btn btn-primary btn-lg" href="https://www.lipsum.com/" target="_blank" role="button">Learn more</a>
                 </p>
                 <footer>
                     <p>All rights reversed &copy; 1900-3400 </p>
