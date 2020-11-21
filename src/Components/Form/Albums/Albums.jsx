@@ -23,7 +23,7 @@ const Albums = () => {
                 {loading ? <Loader /> :
                     albums.map((album) => (
                         <ul className="albums-title" key={album.id}>
-                            <Link className='album-link' to={`/albums/${album.id}/photos`} id={album.id}> {album.id}: {album.title} </Link>
+                            <Link className='album-link' to={`/albums/${album.id}/photos`} id={album.id}>  {album.id}: {album.title} </Link>
                         </ul>
                     ))
                 }

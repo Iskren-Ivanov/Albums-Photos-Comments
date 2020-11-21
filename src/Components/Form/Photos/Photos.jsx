@@ -15,8 +15,13 @@ const Photos = (props) => {
     let history = useHistory();
 
     const authData = JSON.parse(localStorage.getItem('userData'));
+
     const idToken = authData.idToken;
-    const matchAlbumID = parseInt(props.match.params.id);
+    const strLocation = window.location.pathname.trim();
+    const locationToArr = strLocation.split("/").filter(function (str) {
+        return /\S/.test(str);
+    });;
+    const matchAlbumID = parseInt(locationToArr[1]);
 
     const [loading, setLoading] = useState(false);
 

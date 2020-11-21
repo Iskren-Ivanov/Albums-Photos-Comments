@@ -8,27 +8,19 @@ import SignIn from '../Components/auth/SignIn/SignIn';
 import Albums from '../Components/Form/Albums/Albums';
 import Photos from '../Components/Form/Photos/Photos';
 
-const CustomRoute = () => {
-    const localStoreData = JSON.parse(localStorage.getItem('userData'));
+import PrivateRoute from './PrivateRoute.jsx';
 
-    return localStoreData ? (
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/contacts" component={Contacts} />
-            <Route exact path="/albums" component={Albums} />
-            <Route path="/albums/:id/photos" component={Photos} />
-            <Redirect to="/" />
-        </Switch>
-    ) : (
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route path="/contacts" component={Contacts} />
-                <Route path="/signUp" component={SignUp} />
-                <Route path="/signIn" component={SignIn} />
-                <Redirect to="/" />
-            </Switch>
-        );
-};
+const CustomRoute = () => (
+    <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/contacts" component={Contacts} />
+        <Route path="/signUp" component={SignUp} />
+        <Route path="/signIn" component={SignIn} />
+        <PrivateRoute exact path="/albums"><Albums /></PrivateRoute>
+        <PrivateRoute path="/albums/:id/photos"><Photos /></PrivateRoute>
+        <Redirect to="/" />
+    </Switch>
+);
 
 
 export default CustomRoute;
