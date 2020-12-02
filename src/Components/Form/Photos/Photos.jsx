@@ -119,8 +119,7 @@ const Photos = (props) => {
         const commentID = id;
         const filteredComments = comments.filter(x => x.id !== commentID);
         setComments(filteredComments);
-
-        const deleteUrl = `${urlForDeleting}${commentID}${'.json'}`;
+        const deleteUrl = `${urlForDeleting}${commentID}.json`;
         axios.delete(deleteUrl);
     };
 
