@@ -13,18 +13,16 @@ const urlForDeleting = 'https://project-albums-photos-comment.firebaseio.com/com
 
 const Photos = (props) => {
     let history = useHistory();
-
     const authData = JSON.parse(localStorage.getItem('userData'));
-
     const idToken = authData.idToken;
+
     const strLocation = window.location.pathname.trim();
     const locationToArr = strLocation.split("/").filter(function (str) {
         return /\S/.test(str);
-    });;
-    const matchAlbumID = parseInt(locationToArr[1]);
+    });
+    const [albumID, setAlbumID] = useState(parseInt(locationToArr[1]));
 
     const [loading, setLoading] = useState(false);
-
     const [photos, setPhotos] = useState([]);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
@@ -47,24 +45,24 @@ const Photos = (props) => {
         disabledButtonPrevАndNext();
         getPhoto();
         getComments();
-    }, [matchAlbumID]);
+    }, [albumID]);
 
     const disabledButtonPrevАndNext = () => {
-        if (matchAlbumID === albumsData.length) {
+        if (albumID === albumsData.length) {
             setDisabledNextBtn(true);
         } else {
             setDisabledNextBtn(false);
         }
-        if (matchAlbumID === 1) {
+        if (albumID === 1) {
             setDisabledPrevBtn(true);
         }
         else {
             setDisabledPrevBtn(false);
-        }
-    }
+        };
+    };
 
     const getPhoto = async () => {
-        const currentPhoto = albumsData.find(x => x.id === matchAlbumID);
+        const currentPhoto = albumsData.find(x => x.id === albumID);
         setPhotos(currentPhoto);
     };
 
@@ -84,7 +82,7 @@ const Photos = (props) => {
         if (data) {
             const sortDataWhithCurrentID = [];
             for (const [key, value] of Object.entries(data)) {
-                if (value.albumID === matchAlbumID) {
+                if (value.albumID === albumID) {
                     sortDataWhithCurrentID.push({
                         albumID: value.albumID,
                         body: value.body,
@@ -96,7 +94,7 @@ const Photos = (props) => {
             };
             setComments(sortDataWhithCurrentID);
         };
-    }
+    };
 
     const postNewComment = async (email, body, albumID) => {
         const dates = new Date();
@@ -106,7 +104,7 @@ const Photos = (props) => {
             body,
             albumID,
             date: dateFormating
-        }
+        };
 
         await axios.post(urlFirebase, postObject)
             .then(response => {
@@ -115,18 +113,18 @@ const Photos = (props) => {
             .catch(error => {
                 console.log('error photo postComment', error);
                 setLoading(false)
-            })
+            });
         setComments([...comments, postObject])
-    }
+    };
 
     const onSubmitComment = (event) => {
         event.preventDefault();
         usernameInputRef.current.value = '';
 
         if (comment?.length >= 1) {
-            postNewComment(authData.email, comment, matchAlbumID);
-        }
-    }
+            postNewComment(authData.email, comment, albumID);
+        };
+    };
 
     const deleteComment = (id) => {
         const commentID = id;
@@ -168,24 +166,27 @@ const Photos = (props) => {
     );
 
     const PrevPhoto = () => {
+        debugger;
         const minLengthAlbumData = 1;
-        if (matchAlbumID > minLengthAlbumData) {
-            const prevAlbumId = matchAlbumID - 1;
+        if (albumID > minLengthAlbumData) {
+            const prevAlbumId = albumID - 1;
+            setAlbumID(prevAlbumId);
             history.push({
                 pathname: `/albums/${prevAlbumId}/photos`,
             });
-        }
-    }
+        };
+    };
 
     const NextPhoto = () => {
         const maxLengthAlbumData = albumsData.length
-        if (matchAlbumID < maxLengthAlbumData) {
-            const nextAlbumId = matchAlbumID + 1;
+        if (albumID < maxLengthAlbumData) {
+            const nextAlbumId = albumID + 1;
+            setAlbumID(nextAlbumId);
             history.push({
                 pathname: `/albums/${nextAlbumId}/photos`,
             });
-        }
-    }
+        };
+    };
 
     return (
         loading ? <Loader /> :

@@ -44,8 +44,7 @@ const SignUp = (props) => {
             errors.email = "Email is required!";
         } else if (!EmailValidator.validate(email)) {
             errors.email = "Invalid email address!";
-        }
-
+        };
         const passwordRegex = /(?=.*[0-9])/;
         if (!password) {
             errors.password = "Password is required!";
@@ -53,14 +52,14 @@ const SignUp = (props) => {
             errors.password = "Password must be 8 characters long!";
         } else if (!passwordRegex.test(password)) {
             errors.password = "Invalida password. Must contain one number!";
-        }
+        };
 
         if (confirmPassword !== password) {
             errors.password = "Passwords are not the same!";
-        }
+        };
 
         return errors;
-    }
+    };
 
     return (
         <div className="signUp">

@@ -29,8 +29,8 @@ const SignIn = (props) => {
             props.signIn(email, password);
             setEmail('');
             setPassword('');
-        }
-    }
+        };
+    };
 
     const validate = (email, password) => {
         let errors = {};
@@ -47,10 +47,10 @@ const SignIn = (props) => {
             errors.password = "Password must be 8 characters long!";
         } else if (!passwordRegex.test(password)) {
             errors.password = "Invalida password. Must contain one number!";
-        }
+        };
 
         return errors;
-    }
+    };
 
     return (
         <div className="signIn">
@@ -68,6 +68,7 @@ const SignIn = (props) => {
                     <Form.Control onBlur={event => setPassword(event.target.value)}
                         defaultValue={password} type="password" placeholder="Password" />
                 </Form.Group>
+                
                 {errorsMessages}
                 <Button variant="primary" type="submit">
                     Submit
