@@ -95,15 +95,11 @@ const Photos = (props) => {
             albumID,
             date: dateFormating
         };
-
         await axios.post(urlFirebase, postObject)
             .then(response => {
-                setLoading(false)
-            })
-            .catch(error => {
-                setLoading(false)
+                postObject.id = response.data.name;
+                setComments([...comments, postObject]);
             });
-        setComments([...comments, postObject])
     };
 
     const onSubmitComment = (event) => {
@@ -115,11 +111,10 @@ const Photos = (props) => {
         };
     };
 
-    const deleteComment = (id) => {
-        const commentID = id;
-        const filteredComments = comments.filter(x => x.id !== commentID);
+    const deleteComment = (deleteId) => {
+        const filteredComments = comments.filter(x => x.id !== deleteId);
         setComments(filteredComments);
-        const deleteUrl = `${urlForDeleting}${commentID}.json`;
+        const deleteUrl = `${urlForDeleting}${deleteId}.json`;
         axios.delete(deleteUrl);
     };
 
@@ -154,8 +149,7 @@ const Photos = (props) => {
     );
 
     const PrevPhoto = () => {
-        const minLengthAlbumData = 1;
-        if (albumID > minLengthAlbumData) {
+        if (albumID > 1) {
             setAlbumID(albumID - 1);
             history.push({
                 pathname: `/albums/${albumID - 1}/photos`,
@@ -164,8 +158,7 @@ const Photos = (props) => {
     };
 
     const NextPhoto = () => {
-        const maxLengthAlbumData = albumsData.length
-        if (albumID < maxLengthAlbumData) {
+        if (albumID < albumsData.length) {
             setAlbumID(albumID + 1);
             history.push({
                 pathname: `/albums/${albumID + 1}/photos`,
