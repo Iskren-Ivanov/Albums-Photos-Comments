@@ -111,7 +111,6 @@ const Photos = (props) => {
                 setLoading(false)
             })
             .catch(error => {
-                console.log('error photo postComment', error);
                 setLoading(false)
             });
         setComments([...comments, postObject])
@@ -166,7 +165,6 @@ const Photos = (props) => {
     );
 
     const PrevPhoto = () => {
-        debugger;
         const minLengthAlbumData = 1;
         if (albumID > minLengthAlbumData) {
             const prevAlbumId = albumID - 1;
