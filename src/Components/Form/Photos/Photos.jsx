@@ -48,17 +48,8 @@ const Photos = (props) => {
     }, [albumID]);
 
     const disabledButtonPrevАndNext = () => {
-        if (albumID === albumsData.length) {
-            setDisabledNextBtn(true);
-        } else {
-            setDisabledNextBtn(false);
-        }
-        if (albumID === 1) {
-            setDisabledPrevBtn(true);
-        }
-        else {
-            setDisabledPrevBtn(false);
-        };
+        setDisabledNextBtn(albumID === albumsData.length ? true : false);
+        setDisabledPrevBtn(albumID === 1 ? true : false);
     };
 
     const getPhoto = async () => {
