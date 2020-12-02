@@ -75,7 +75,6 @@ const Photos = (props) => {
                 setLoading(false)
             })
             .catch(error => {
-                console.log('error photo', error);
                 setLoading(false)
             });
 
@@ -150,7 +149,7 @@ const Photos = (props) => {
                         </Toast.Header>
                         <Toast.Body>{c.body}</Toast.Body>
                     </Toast>
-                </div >
+                </div>
             );
         }));
 
@@ -167,10 +166,9 @@ const Photos = (props) => {
     const PrevPhoto = () => {
         const minLengthAlbumData = 1;
         if (albumID > minLengthAlbumData) {
-            const prevAlbumId = albumID - 1;
-            setAlbumID(prevAlbumId);
+            setAlbumID(albumID - 1);
             history.push({
-                pathname: `/albums/${prevAlbumId}/photos`,
+                pathname: `/albums/${albumID - 1}/photos`,
             });
         };
     };
@@ -178,10 +176,9 @@ const Photos = (props) => {
     const NextPhoto = () => {
         const maxLengthAlbumData = albumsData.length
         if (albumID < maxLengthAlbumData) {
-            const nextAlbumId = albumID + 1;
-            setAlbumID(nextAlbumId);
+            setAlbumID(albumID + 1);
             history.push({
-                pathname: `/albums/${nextAlbumId}/photos`,
+                pathname: `/albums/${albumID + 1}/photos`,
             });
         };
     };
