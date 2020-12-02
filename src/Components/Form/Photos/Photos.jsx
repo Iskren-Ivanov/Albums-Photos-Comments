@@ -63,11 +63,8 @@ const Photos = (props) => {
         await axios.get(urlFirebase + idToken)
             .then(response => {
                 data = response.data;
-                setLoading(false)
-            })
-            .catch(error => {
-                setLoading(false)
             });
+        setLoading(false);
 
         if (data) {
             const sortDataWhithCurrentID = [];
