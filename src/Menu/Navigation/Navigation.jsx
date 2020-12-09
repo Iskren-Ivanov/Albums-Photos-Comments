@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Form, Navbar, Nav, } from 'react-bootstrap';
 import LogoutBtn from '../../Components/UI/Buttons/Logout/Logout';
 import SignInOrSignUpButton from '../../Components/UI/Buttons/SwitchSignInOrSignUp/SignInOrSignUp';
-import './Navigation.css';
 
 const Navigation = () => {
     const { authData } = useSelector(store => store.auth);

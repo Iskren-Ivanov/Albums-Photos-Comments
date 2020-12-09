@@ -1,35 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Loader from '../../../shared/loader/loader';
-import albumsPhotos from '../../../PngImages/albumsImg/albumsImg';
+import React from 'react';
+import { Nav } from 'react-bootstrap';
+import albums from '../../../PngImages/albumsImg/albumsImg';
 
 import './Albums.css';
 
 const Albums = () => {
-    const [albums, setAlbums] = useState([]);
-
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        setLoading(true);
-        setAlbums(albumsPhotos);
-        setLoading(false);
-    }, []);
-
-
     return (
-        <section>
-            <div className="albums-container">
-                {loading ? <Loader /> :
-                    albums.map((album) => (
-                        <ul className="albums-title" key={album.id}>
-                            <Link className='album-link' to={`/albums/${album.id}/photos`} id={album.id}>  {album.id}: {album.title} </Link>
-                        </ul>
-                    ))
-                }
-            </div>
-        </section>
-    )
-}
+        <Nav className="albumsContainer" variant="pills">
+            {albums.map(album =>
+                <Nav.Item key={album.id} className="navbar navitem-expand-lg navbar-light bg-light customNavItem">
+                    <Nav.Link className="nav-link customNavLink" eventKey={album.id} href={`/albums/${album.id}/photos`}>
+                        {album.id}: {album.title}
+                    </Nav.Link>
+                </Nav.Item>
+            )}
+        </Nav>
+    );
+};
 
 export default Albums;

@@ -22,6 +22,6 @@ const Login = () => {
             </ButtonGroup>
         </div>
     );
-}
+};
 
 export default Login;
