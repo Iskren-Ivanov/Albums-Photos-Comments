@@ -17,7 +17,7 @@ const Photos = ({ history, match }) => {
         if (albumId > albumsData.length) {
             history.push(`/albums/${albumsData.length}/photos`);
         }
-    }, [albumId, history])
+    }, [albumId])
 
     return (
         <Card className="photo-card">
