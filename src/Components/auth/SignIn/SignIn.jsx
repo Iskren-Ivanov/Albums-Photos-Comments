@@ -1,60 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as EmailValidator from "email-validator";
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import authRedux from '../../../store/actions/auth';
 import { Form, Button, } from 'react-bootstrap';
 import './SignIn.css';
 
 const SignIn = (props) => {
+    useEffect(() => {
+        if (props.successSignIn) {
+            history.push('/');
+            setEmail('');
+            setPassword('');
+            props.clearTheSuccessfullBooleans();
+        };
+    }, [props.successSignIn]);
+
     const history = useHistory();
 
-    const [errorsMessages, setErrorsMessages] = useState("");
+    const [error, setError] = useState(null);
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const errors = validate(email, password);
-
-        if (errors.email) {
-            setErrorsMessages(<div className="error">{errors.email}</div>);
-        }
-        else if (errors.password) {
-            setErrorsMessages(<div className="error">{errors.password}</div>);
-        }
-        else {
-            history.push('/');
+        setLoading(true);
+        const err = validate(email, password);
+        if (err) {
+            setError(err);
+        } else {
             props.signIn(email, password);
-            setEmail('');
-            setPassword('');
-        };
+        }
+        setLoading(false);
     };
 
     const validate = (email, password) => {
-        let errors = {};
+        let err;
         if (!email) {
-            errors.email = "Email is required";
+            err = 'Email is required';
         } else if (!EmailValidator.validate(email)) {
-            errors.email = "Invalid email address!";
+            err = 'Invalid email address!';
         }
-
         const passwordRegex = /(?=.*[0-9])/;
         if (!password) {
-            errors.password = "Password is required!";
+            err = 'Password is required!';
         } else if (password.length < 8) {
-            errors.password = "Password must be 8 characters long!";
+            err = 'Password must be 8 characters long!';
         } else if (!passwordRegex.test(password)) {
-            errors.password = "Invalida password. Must contain one number!";
+            err = 'Invalida password. Must contain one number!';
         };
-
-        return errors;
+        return err;
     };
 
     return (
         <div className="signIn">
-            <Form class="was-validated" onSubmit={е => handleSubmit(е)}>
+            <Form className="was-validated" onSubmit={е => handleSubmit(е)}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label >Email address</Form.Label>
                     <Form.Control onBlur={event => setEmail(event.target.value)} defaultValue={email} type="email" placeholder="Enter email" />
@@ -68,18 +70,29 @@ const SignIn = (props) => {
                     <Form.Control onBlur={event => setPassword(event.target.value)}
                         defaultValue={password} type="password" placeholder="Password" />
                 </Form.Group>
-                
-                {errorsMessages}
-                <Button variant="primary" type="submit">
+                {error && <div className="error">{error}</div>}
+                <Button disabled={loading} variant="primary" type="submit">
                     Submit
                 </Button>
             </Form>
+            <div className="w-100 text-center mt-2">
+                <Link to="/forgotPassword"> Forgot Password? </Link>
+            </div>
+            <div className="w-100 text-center mt-2">
+                Need an account? <Link to="/signUp"> Sign up</Link>
+            </div>
         </div>
     );
 };
 
+const mapStateToProps = (state) => {
+    const { successSignIn } = state.auth;
+    return { successSignIn };
+};
+
 const mapDispatchToProps = (dispatch) => ({
-    signIn: (email, password) => dispatch(authRedux.SingIn(email, password))
+    signIn: async (email, password) => await dispatch(authRedux.SingIn(email, password)),
+    clearTheSuccessfullBooleans: () => dispatch(authRedux.ClearTheSuccessfullBooleans())
 });
 
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

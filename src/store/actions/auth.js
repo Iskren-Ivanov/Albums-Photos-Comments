@@ -1,67 +1,78 @@
-import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
+import { auth } from '../../firebase/firebase';
 
-const appKey = 'AIzaSyBd2itbl2Cdjth1i_XqxU1sRdThY5lC6RM';
-const baseUrlSignIn = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
-const baseUrlSignUp = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
-
-const SingUp = (email, password, username) => {
+const SingUp = (email, password) => {
     return dispatch => {
-        const authData = {
-            email,
-            password,
-            username,
-            returnSecureToken: true
-        };
-
-        axios.post(baseUrlSignUp + appKey, authData)
-            .then(response => {
-                NotificationManager.success('Success Sign Up!', 'Sign Up', 3000);
-                dispatch({ type: 'SIGN_UP_SUCCESS', message: 'Success Sign Up!' });
-            })
-            .catch(err => {
-                NotificationManager.warning('Еxisting Registration!', 'Error', 3000);
-                dispatch({ type: 'SIGN_UP_ERROR', message: err });
+        auth.createUserWithEmailAndPassword(email, password).then(() => {
+            NotificationManager.success('Successful Sign Up!', 'Sign Up', 5000);
+            dispatch({ type: 'SIGN_UP_SUCCESS', message: 'Successful Sign Up!' });
+        })
+            .catch((error) => {
+                NotificationManager.warning(error.message, 'Error', 5000);
+                dispatch({ type: 'SIGN_UP_ERROR', message: error.message });
             });
     };
 };
 
+
 const SingIn = (email, password) => {
     return dispatch => {
-        const authData = {
-            email,
-            password,
-            returnSecureToken: true
-        };
-
-        axios.post(baseUrlSignIn + appKey, authData)
-            .then(response => {
-                NotificationManager.success('Success Sign In!', 'Sign In', 3000);
-                dispatch({ type: 'SIGN_IN_SUCCESS', authData: response.data, message: 'Success Sign In!' });
-                localStorage.setItem('userData', JSON.stringify(response.data));
-            }).catch(error => {
-                NotificationManager.warning('Invalid User!', 'Error', 3000);
-                dispatch({ type: 'SIGN_IN_ERROR', message: error });
+        auth.signInWithEmailAndPassword(email, password)
+            .then((response) => {
+                const authData = {
+                    email: response.user.email,
+                    authToken: response.user.l
+                };
+                NotificationManager.success('Successful Sign In!', 'Sign In', 5000);
+                dispatch({ type: 'SIGN_IN_SUCCESS', authData: authData, message: 'Successful Sign In!' });
+                localStorage.setItem('userData', JSON.stringify(authData));
+            })
+            .catch((error) => {
+                NotificationManager.warning(error.message, 'Error', 5000);
+                dispatch({ type: 'SIGN_IN_ERROR', message: error.message });
             });
     };
 };
 
 const Logout = () => {
     return dispatch => {
+        auth.signOut();
+        localStorage.removeItem('userData');
         dispatch({ type: 'LOGOUT' });
     };
 };
-
 const GetLocalStoreDataForStart = (localStoreData) => {
     return dispatch => {
-        dispatch({ type: 'SIGN_UP_WITH_ID_TOKEN', authData: localStoreData })
+        dispatch({ type: 'GET_LOCALE_STORE_DATA_FOR_START', authData: localStoreData })
     };
 };
 
+const ChangePassword = (newPassoword) => {
+    return dispatch => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                user.updatePassword(newPassoword).then(() => {
+                    NotificationManager.success('You Have Successfully Changed Your Password!', 'Change Password', 5000);
+                }, (error) => {
+                    NotificationManager.warning(error.message, 'Error', 5000);
+                });
+                dispatch({ type: 'CHANGE_PASSWORD' });
+            };
+        });
+    };
+};
+
+const ClearTheSuccessfullBooleans = () => {
+    return dispatch => {
+        dispatch({ type: 'CLEAR_THE_SUCCESSFUL_BOOLEANS' });
+    };
+};
 
 export default {
     SingUp,
     SingIn,
     GetLocalStoreDataForStart,
     Logout,
+    ChangePassword,
+    ClearTheSuccessfullBooleans
 };

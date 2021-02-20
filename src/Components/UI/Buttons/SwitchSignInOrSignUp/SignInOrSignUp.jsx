@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import './SignInOrSignUp.css';
 
-const Login = () => {
+const SignInOrSignUp = () => {
     let history = useHistory();
 
     const handleClickSingUp = () => {
@@ -24,4 +24,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignInOrSignUp;

@@ -7,10 +7,10 @@ import './CommentsBox.css';
 
 const urlFirebase = 'https://project-albums-photos-comment.firebaseio.com/comments.json?';
 const urlForDeleting = 'https://project-albums-photos-comment.firebaseio.com/comments/';
-const authData = JSON.parse(localStorage.getItem('userData'));
-const idToken = authData.idToken;
 
 const CommentsBox = () => {
+    const authData = JSON.parse(localStorage.getItem('userData'));
+    const idToken = authData.idToken;
 
     const getAlbumId = () => {
         const strLocation = window.location.pathname.trim();

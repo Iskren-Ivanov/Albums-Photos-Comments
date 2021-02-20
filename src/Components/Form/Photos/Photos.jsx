@@ -12,7 +12,7 @@ const Photos = ({ history, match }) => {
     const [disabledPrevBtn, setDisabledPrevBtn] = useState(false);
 
     useEffect(() => {
-        setDisabledNextBtn(albumId === albumsData.length)
+        setDisabledNextBtn(albumId === albumsData.length);
         setDisabledPrevBtn(albumId === 1);
         if (albumId > albumsData.length) {
             history.push(`/albums/${albumsData.length}/photos`);
