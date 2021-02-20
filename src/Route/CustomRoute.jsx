@@ -15,9 +15,9 @@ const CustomRoute = () => (
     <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/contacts" component={Contacts} />
-        <Route path="/signUp" component={SignUp} />
-        <Route path="/signIn" component={SignIn} />
         <Route path="/forgotPassword" component={ForgotPassword} />
+        <PrivateRoute path="/profile"><SignUp /></PrivateRoute>
+        <PrivateRoute path="/profile"><SignIn /></PrivateRoute>
         <PrivateRoute exact path="/albums"><Albums /></PrivateRoute>
         <PrivateRoute path="/albums/:id/photos"><Photos /></PrivateRoute>
         <PrivateRoute path="/profile"><UserProfile /></PrivateRoute>
