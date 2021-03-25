@@ -22,6 +22,7 @@ const MyModal = ({ show, handleClose, changePassoword }) => {
             setError(err);
         } else {
             changePassoword(password);
+            setVisible(false);
         }
     };
 

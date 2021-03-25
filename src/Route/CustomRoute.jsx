@@ -8,19 +8,20 @@ import SignIn from '../Components/auth/SignIn/SignIn';
 import Albums from '../Components/Form/Albums/Albums';
 import Photos from '../Components/Form/Photos/Photos';
 import UserProfile from '../Components/UserProfile/UserProfile';
-import PrivateRoute from './PrivateRoute.jsx';
 import ForgotPassword from '../Components/ForgotPassword/ForgotPassword';
+import PrivateRouteWithData from './PrivateRouteWithData';
+import PrivateRouteWithoutData from './PrivateRouteWithoutData';
 
 const CustomRoute = () => (
     <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/contacts" component={Contacts} />
         <Route path="/forgotPassword" component={ForgotPassword} />
-        <PrivateRoute path="/profile"><SignUp /></PrivateRoute>
-        <PrivateRoute path="/profile"><SignIn /></PrivateRoute>
-        <PrivateRoute exact path="/albums"><Albums /></PrivateRoute>
-        <PrivateRoute path="/albums/:id/photos"><Photos /></PrivateRoute>
-        <PrivateRoute path="/profile"><UserProfile /></PrivateRoute>
+        <PrivateRouteWithoutData path="/signUp"><SignUp /></PrivateRouteWithoutData>
+        <PrivateRouteWithoutData path="/signIn"><SignIn /></PrivateRouteWithoutData>
+        <PrivateRouteWithData exact path="/albums"><Albums /></PrivateRouteWithData>
+        <PrivateRouteWithData path="/albums/:id/photos"><Photos /></PrivateRouteWithData>
+        <PrivateRouteWithData path="/profile"><UserProfile /></PrivateRouteWithData>
         <Redirect to="/" />
     </Switch>
 );

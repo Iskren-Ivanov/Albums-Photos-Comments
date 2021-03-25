@@ -9,7 +9,6 @@ import './SignUp.css';
 
 const SignUp = (props) => {
     let history = useHistory();
-
     const [error, setError] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");

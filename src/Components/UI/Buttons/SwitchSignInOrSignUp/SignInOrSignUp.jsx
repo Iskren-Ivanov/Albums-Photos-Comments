@@ -17,8 +17,8 @@ const SignInOrSignUp = () => {
     return (
         <div className="logAndReg-container">
             <ButtonGroup aria-label="Basic example">
-                <Button variant="primary" onClick={handleClickSignIn} >Sign In</Button>
-                <Button variant="primary" onClick={handleClickSingUp} >Sign Up</Button>
+                <Button variant="primary" onClick={handleClickSignIn}>Sign In</Button>
+                <Button variant="primary" onClick={handleClickSingUp}>Sign Up</Button>
             </ButtonGroup>
         </div>
     );

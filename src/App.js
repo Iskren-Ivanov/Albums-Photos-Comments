@@ -11,7 +11,7 @@ import './App.css';
 import 'react-notifications/lib/notifications.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App(props) {
+const App = (props) => {
   useEffect(() => {
     const localStoreData = JSON.parse(localStorage.getItem('userData'));
 

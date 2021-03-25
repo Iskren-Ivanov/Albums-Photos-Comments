@@ -1,19 +1,19 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
 
-const PrivateRoute = ({ children, ...rest }) => (
+const PrivateRouteWithoutData = ({ children, ...rest }) => (
     <Route
         {...rest}
         render={({ location }) =>
             localStorage.getItem('userData') ? (
-                children
+                <Redirect
+                    to="/"
+                />
             ) : (
-                    <Redirect
-                        to="/"
-                    />
-                )
+                children
+            )
         }
     />
 );
 
-export default PrivateRoute;
+export default PrivateRouteWithoutData;
